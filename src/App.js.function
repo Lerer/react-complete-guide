@@ -1,0 +1,41 @@
+import React, {useState} from 'react';
+//import logo from './logo.svg';
+import './App.css';
+import Person from './Person/Person';
+
+const App = props => {
+  const [personsState,setPersonsSate] = useState({
+    persons: [
+      { name: 'Coby', age: 43},
+      {name: 'Hilah', age: 42}
+    ]
+  }); 
+
+  const switchNameHandler = (newName) => {
+    //console.log('was clicked');
+    //this.state.persons[0].name = 'Yaakov';
+    setPersonsSate({
+        persons: [
+            { name: newName, age: 43},
+            {name: 'Hilah', age: 42}
+        ]
+    });
+  }
+
+  const [otherState, setOtherState] = useState('some other state');
+
+  console.log(personsState,otherState);
+
+    return (
+      <div className="App">
+        <h1>Hi, I'm a React App</h1>
+        <button onClick={() => switchNameHandler('Yaakov')}>Switch Name</button>
+        <Person click={switchNameHandler.bind(this,'Coby')} name={personsState.persons[0].name} age={personsState.persons[0].age}>a person</Person>
+        <Person name={personsState.persons[1].name} age={personsState.persons[1].age}>a person</Person>
+      </div>
+    );
+    // return React.createElement('div',{className:'App'},
+    //   React.createElement('h1',null,'Hi, I\'m a React App!!!'));
+}
+
+export default App;
