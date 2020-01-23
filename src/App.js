@@ -1,20 +1,33 @@
 import React, {Component} from 'react';
-//import logo from './logo.svg';
+import styled from 'styled-components';
 import './App.css';
+
 import Person from './Person/Person';
+
+const StyledButton = styled.button`
+  background-color: ${props => props.alt ? 'red' : 'green'};
+  color: white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  curser: pointer;
+  &:hover {
+    background-color: ${props => props.alt ? 'salmon' : 'lightgreen'};
+    color: black;
+  }
+`
 
 class App extends Component {
   state = {
     persons: [
       {id:'qfsdf', name: 'Coby', age: 43},
-      {id:'sdk3c', name: 'Hilah', age: 42}
+      {id:'sdk3c', name: 'Hilah', age: 42},
+      {id:'klj98', name: 'Leenoy', age: 9}
     ],
     showPersons : false
   } 
 
   switchNameHandler = (name) => {
-    //console.log('was clicked');
-    //this.state.persons[0].name = 'Yaakov';
     this.setState({persons: [
       { name: name, age: 43},
       {name: 'Hilah', age: 42}
@@ -37,12 +50,6 @@ class App extends Component {
     persons[personIndex] = person;
 
     this.setState({persons: persons});
-
-    // this.setState( {
-    //   persons: [
-    //     { name: event.target.value, age: 43},
-    //     {name: 'Hilah', age: 42}      ]
-    // })
   }
 
   togglePersonsHandler = () => {
@@ -59,11 +66,16 @@ class App extends Component {
 
   render() {
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
-      curser: 'pointer'
+      curser: 'pointer',
+      ':hover' : {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
     }
 
     let persons = null;
@@ -81,38 +93,36 @@ class App extends Component {
           })}
         </div>
       );
+      // style.backgroundColor='red';
+      // style[':hover'] = {
+      //   backgroundColor: 'salmon',
+      //   color: 'black'
+      // }
+
     }
+
+    const classes = [];
+    if (this.state.persons.length<=2){
+      classes.push('red');
+    }
+    if (this.state.persons.length<=1){
+      classes.push('bold');
+    }
+
+
 
     return (
       <div className="App">
         <h1>Hi, I'm a React App</h1>
-        <button 
-          style={style}
+        <p className={classes.join(' ')}>This is really working</p>
+        <StyledButton 
+          alt={this.state.showPersons}
           onClick={this.togglePersonsHandler}>Toggle Persons
-        </button>
+        </StyledButton>
         {persons}
       </div>
     );
-    // return React.createElement('div',{className:'App'},
-    //   React.createElement('h1',null,'Hi, I\'m a React App!!!'));
   }
 }
-
-/*
-<header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-*/
 
 export default App;
