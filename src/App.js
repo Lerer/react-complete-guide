@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import './App.css';
 
 import Person from './Person/Person';
+import ErrorBoundry from './ErrorBoundry/ErrorBoundry';
 
 const StyledButton = styled.button`
   background-color: ${props => props.alt ? 'red' : 'green'};
@@ -35,7 +36,7 @@ class App extends Component {
   }
 
   nameChangeEventHandler = (event,id) => {
-    console.log(event);
+    //console.log(event);
     const personIndex = this.state.persons.findIndex((p) => {
       return p.id === id;
     });
@@ -83,13 +84,15 @@ class App extends Component {
       persons = (
         <div>
           {this.state.persons.map((person,index) => {
-            return <Person 
-              click={() => this.deletePersonHandler(index)} 
-              name={person.name} 
-              changed={(event) => this.nameChangeEventHandler(event,person.id)}
-              age={person.age}
-              key={person.id}>a person
-            </Person>
+            return <ErrorBoundry 
+              key={person.id}>
+                <Person 
+                  click={() => this.deletePersonHandler(index)} 
+                  name={person.name} 
+                  changed={(event) => this.nameChangeEventHandler(event,person.id)}
+                  age={person.age}>a person
+                </Person>
+              </ErrorBoundry>
           })}
         </div>
       );
