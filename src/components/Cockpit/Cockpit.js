@@ -1,8 +1,13 @@
-import React, {useEffect} from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, {useEffect, useContext} from 'react';
 import classes from './Cockpit.module.css';
+import AuthContext from '../../context/auth-context';
 
 const cockpit = (props) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+
+    const authContext = useContext(AuthContext);
+    console.log(authContext.authenticated);
+
     useEffect(() => {
         console.log('Cockpit.js | rendering.... => useEffect');
     },[]);
@@ -32,6 +37,9 @@ const cockpit = (props) => {
                 alt="{props.showPersons}"
                 onClick={props.buttonClicked}>Toggle Persons
             </button>
+            <AuthContext.Consumer>
+                {(context) => <button onClick={context.login}>Login</button>}
+            </AuthContext.Consumer>
         </div>
     );
 }
